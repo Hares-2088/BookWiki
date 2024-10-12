@@ -1,0 +1,223 @@
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+/* --------------------------------MYBookWiki----------------------------- */
+body{
+ /* background-image: linear-gradient(to bottom, #5b4373, #b7a8e4);
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 0; 
+  margin: 0;
+  */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.bookAuthor{
+  height: 100vh; 
+}
+.card-title{
+  font-family: cursive;
+}
+
+.title{
+  text-align: center;
+  margin-bottom: 5rem ;
+  font-size: 5rem;
+  font-weight: 600;
+  background-image: radial-gradient(circle, rgb(33, 120, 202), rgb(8, 33, 80));
+  color: transparent;
+  background-clip: text;
+}
+
+.subtitle{
+  font-size: 5rem;
+  font-weight: 600;
+  color: rgb(35, 71, 218);
+  background-clip: text;
+}
+
+label{
+  color: black;
+}
+.card:hover {
+  box-shadow: 0 0 10px rgba(126, 50, 226, 0.2);
+  transform: translateY(-15px);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.background {
+  background-image: linear-gradient(to bottom right, #88c5f4, #497ce0);
+  background-repeat: no-repeat;
+  background-size: cover; 
+  height: fit-content;
+}
+
+.home-background {
+  background-image: linear-gradient(to bottom right, #88c5f4, #497ce0);
+  background-repeat: no-repeat;
+  background-size: cover; 
+  
+}
+
+.carousel-item{
+  height:25rem;
+  margin-bottom: 8rem;
+
+}
+.carousel-image {
+  height: 20rem;
+  width: 100%;
+  object-fit: contain; 
+}
+
+.carousel-container {
+  max-width: 800px;
+  width: 100%; 
+  max-height: 50rem;
+  height: 100%;
+  margin-top: 10rem;
+}
+
+.carousel-container-first {
+  max-width: 800px;
+  width: 100%; 
+  max-height: 50rem;
+  height: 100%;
+}
+
+.HomePage_Line{
+  width: 80%;
+  margin: 5rem ;
+  border: 2px solid white;
+}
+
+.Fantasy-Carousel-container {
+  background-image: url("https://wallpapercave.com/wp/wp5557961.jpg");
+  background-size: cover;
+  background-position: center; 
+  background-repeat: no-repeat;
+  height: 100vh; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #093242;
+  mix-blend-mode:hard-light;
+}
+
+.Thriller-Carousel-container {
+  background-image: url("https://img.freepik.com/free-photo/spooky-forest-dark-mystery-horror-nature-generated-by-ai_24640-81335.jpg");
+  background-size: cover;
+  background-position: center; 
+  background-repeat: no-repeat;
+  height: 100vh; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #1c1c36;
+  mix-blend-mode:hard-light;
+}
+
+.Romance-Carousel-container {
+  background-image: url("https://img.freepik.com/free-vector/two-neon-red-hearts-background-with-text-space_1017-23294.jpg");
+  background-size: cover;
+  background-position: center; 
+  background-repeat: no-repeat;
+  height: 100vh; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: rgb(223, 55, 72);
+  mix-blend-mode: hard-light;
+}
+
+.NonFiction-Carousel-container {
+  background-image: url("https://cascadiaauthorservices.com/wp-content/uploads/2023/02/narrative-nonfiction.jpg");
+  background-size: cover;
+  background-position: center; 
+  background-repeat: no-repeat;
+  height: 100vh; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  mix-blend-mode:hard-light;
+}
+.YoungAdult-Carousel-container {
+  background-image: url("https://img.buzzfeed.com/buzzfeed-static/static/2020-11/4/0/enhanced/f3f50a5fc486/enhanced-2078-1604448352-13.jpg?output-format=jpg&output-quality=auto");
+  background-size: cover;
+  background-position: center; 
+  background-repeat: no-repeat;
+  height: 100vh; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  mix-blend-mode:hard-light;
+ color: #072f3f;
+}
+
+.carousel-description{
+  margin-top: 2rem;
+  text-align: center;
+  /* color: #953cf5;
+  font-family: cursive; */
+}
+.carousel-title{
+  /* color: #953cf5; */
+  text-align: center;
+  padding-bottom: 2rem;
+}
+.center{
+  text-align: center;
+}
+
+.detail-image-container {
+  display: flex;
+  justify-content: flex-start;
+  height: 40rem;
+  margin-left: 1rem;
+}
+
+.detail-image {
+  object-fit: contain;
+}
+.paragraph{
+  font-size: x-large;
+}
+
+.hoverable-link {
+  text-decoration: none; /* Remove the default underline */
+  color: #333; /* Set the text color */
+  transition: color 0.3s; /* Add a smooth color transition */
+  position: relative; /* Set relative positioning for the ::after pseudo-element */
+  display: inline-block; /* Ensure that the hover effect covers the entire text */
+}
+
+.hoverable-link::after {
+  content: ""; /* Add an empty content for the ::after pseudo-element */
+  position: absolute; /* Set absolute positioning */
+  left: 0; /* Align to the left of the parent element */
+  bottom: 0; /* Align to the bottom of the parent element */
+  height: 2px; /* Set the height of the underline */
+  width: 100%; /* Set the width to cover the entire text */
+  background-color: #007bff; /* Set the color of the underline */
+  transform: scaleX(0); /* Initially, make the underline invisible */
+  transform-origin: bottom right; /* Set the transform origin to the bottom right */
+  transition: transform 0.3s ease; /* Add a smooth transform transition */
+}
+
+.hoverable-link:hover {
+  color: #0a407a; /* Change the text color on hover */
+}
+
+.hoverable-link:hover::after {
+  transform: scaleX(1); /* Expand the underline on hover */
+  transform-origin: bottom left; /* Change the transform origin for a smooth effect */
+}
