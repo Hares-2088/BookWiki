@@ -21,5 +21,8 @@
         <module name="com.Bessam.BookWiki.test" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="com.Bessam.BookWiki" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>

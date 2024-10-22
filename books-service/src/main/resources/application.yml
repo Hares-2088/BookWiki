@@ -15,28 +15,20 @@ spring.jpa.hibernate.ddl-auto: none
 
 #for h2
 spring:
-  config:
-    activate:
-      on-profile: h2
-
-  h2:
-    console:
-      enabled: true
+  profiles:
+    active: docker
 
   datasource:
-    url: jdbc:h2:mem:bookwiki;DB_CLOSE_DELAY=-1
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+    url: jdbc:mysql://mysql:3306/auth-db
+    username: user
+    password: pwd
 
   jpa:
-    show-sql: true
     hibernate:
-      ddl-auto: none
-
+      ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+        dialect: org.hibernate.dialect.MySQLDialect
 
     defer-datasource-initialization: true
 

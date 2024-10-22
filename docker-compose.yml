@@ -39,9 +39,9 @@ services:
       - MYSQL_PASSWORD=pwd
     volumes:
       - ./data/mysql:/var/lib/mysql
-      - ./data/init.d:/docker-entrypoint-initdb.d
+      - ./books-service/src/main/resources:/docker-entrypoint-initdb.d
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-uuser", "-ppwd", "-h", "127.0.0.1"]
+      test: [ "CMD", "mysqladmin", "ping", "-uuser", "-ppwd", "-h", "127.0.0.1" ]
       interval: 10s
       timeout: 5s
       retries: 10
