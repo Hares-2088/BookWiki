@@ -40,6 +40,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y docker-compose
 
+      #free port 3310 for mysql
+      - name: Free port 3310
+        run: |
+          sudo lsof -i :3310 | grep LISTEN | awk '{print $2}' | xargs -r sudo kill -9
+
       - name: Build and push bookwiki-frontend Docker image
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/bookwiki-frontend:latest ./bookwiki-frontend
@@ -60,7 +65,3 @@ jobs:
       - name: Check MySQL Health
         run: |
           docker-compose exec mysql mysqladmin ping -uuser -ppwd
-      #free port 3310 for mysql
-      - name: Free port 3310
-        run: |
-          sudo lsof -i :3310 | grep LISTEN | awk '{print $2}' | xargs -r sudo kill -9
