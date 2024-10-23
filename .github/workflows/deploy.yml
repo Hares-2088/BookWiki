@@ -40,10 +40,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y docker-compose
 
-      # Stop and remove existing MySQL container
+      # Stop and remove existing MySQL container (if it exists)
       - name: Stop and remove existing MySQL container
         run: |
-          docker ps -q --filter "name=bookwiki_mysql_1" | grep -q . && docker stop bookwiki_mysql_1 && docker rm bookwiki_mysql_1
+          docker ps -q --filter "name=bookwiki_mysql_1" | xargs -r docker stop
+          docker ps -a -q --filter "name=bookwiki_mysql_1" | xargs -r docker rm
 
       # Build and push bookwiki-frontend Docker image
       - name: Build and push bookwiki-frontend Docker image
