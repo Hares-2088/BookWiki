@@ -38,26 +38,6 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/bookwiki-frontend:latest
 
-      - name: Start MySQL database
-        run: |
-          docker run -d \
-            --name bookwiki_db \
-            -e MYSQL_ROOT_PASSWORD=rootpwd \
-            -e MYSQL_DATABASE=auth-db \
-            -e MYSQL_USER=user \
-            -e MYSQL_PASSWORD=pwd \
-            -p 3310:3306 \
-            mysql:5.7
-
-      - name: Start PhpMyAdmin
-        run: |
-          docker run -d \
-            --name PhpMyAdmin \
-            --link bookwiki_db:db \
-            -e PMA_ARBITRARY=1 \
-            -p 5013:80 \
-            phpmyadmin:5.2.0
-
       - name: Deploy to Docker Swarm
         run: |
           docker service update --image ${{ secrets.DOCKER_USERNAME }}/bookwiki-backend:latest bookwiki_backend
