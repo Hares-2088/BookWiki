@@ -60,3 +60,7 @@ jobs:
       - name: Check MySQL Health
         run: |
           docker-compose exec mysql mysqladmin ping -uuser -ppwd
+      #free port 3310 for mysql
+      - name: Free port 3310
+        run: |
+          sudo lsof -i :3310 | grep LISTEN | awk '{print $2}' | xargs -r sudo kill -9
