@@ -1,4 +1,4 @@
-name: Deploy Dockerized Application
+name: Deploy BookWiki App
 
 on:
   push:
@@ -6,13 +6,14 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Setup Docker
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -22,23 +23,17 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push backend image
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          file: ./Dockerfile.backend
-          push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/bookwiki-backend:latest
-
-      - name: Build and push frontend image
-        uses: docker/build-push-action@v3
-        with:
-          context: ./bookwiki-frontend
-          file: ./bookwiki-frontend/Dockerfile.frontend
-          push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/bookwiki-frontend:latest
-
-      - name: Deploy to Docker Swarm
+      - name: Build and push bookwiki-frontend Docker image
         run: |
-          docker service update --image ${{ secrets.DOCKER_USERNAME }}/bookwiki-backend:latest bookwiki_backend
-          docker service update --image ${{ secrets.DOCKER_USERNAME }}/bookwiki-frontend:latest bookwiki_frontend
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/bookwiki-frontend:latest ./bookwiki-frontend
+          docker push ${{ secrets.DOCKER_USERNAME }}/bookwiki-frontend:latest
+
+      - name: Build and push books-service Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/books-service:latest ./books-service
+          docker push ${{ secrets.DOCKER_USERNAME }}/books-service:latest
+
+      # Deploy with Docker Compose
+      - name: Deploy services with Docker Compose
+        run: |
+          docker-compose -f docker-compose.yml up -d
