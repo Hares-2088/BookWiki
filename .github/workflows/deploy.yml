@@ -48,7 +48,7 @@ jobs:
       # Deploy with Docker Compose
       - name: Deploy services with Docker Compose
         run: |
-          docker-compose up --build -d
+          docker-compose up --build
           sleep 30 # Wait for containers to be fully up and running
 
       # Check that MySQL service is running
