@@ -14,7 +14,7 @@ jobs:
         image: mysql:5.7
         options: --health-cmd="mysqladmin ping -h 127.0.0.1 -uuser -ppwd --silent" --health-interval=10s --health-retries=5
         ports:
-          - 3310:3306
+          - 3320:3306  # Changed the host port to 3320 to avoid conflicts
         env:
           MYSQL_ROOT_PASSWORD: rootpwd
           MYSQL_DATABASE: auth-db
@@ -40,16 +40,18 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y docker-compose
 
-      #free port 3310 for mysql
-      - name: Free port 3310
+      # Stop and remove existing MySQL container
+      - name: Stop and remove existing MySQL container
         run: |
-          sudo lsof -i :3310 | grep LISTEN | awk '{print $2}' | xargs -r sudo kill -9
+          docker ps -q --filter "name=bookwiki_mysql_1" | grep -q . && docker stop bookwiki_mysql_1 && docker rm bookwiki_mysql_1
 
+      # Build and push bookwiki-frontend Docker image
       - name: Build and push bookwiki-frontend Docker image
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/bookwiki-frontend:latest ./bookwiki-frontend
           docker push ${{ secrets.DOCKER_USERNAME }}/bookwiki-frontend:latest
 
+      # Build and push books-service Docker image
       - name: Build and push books-service Docker image
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/books-service:latest ./books-service
