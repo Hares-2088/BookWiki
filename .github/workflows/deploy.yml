@@ -1,4 +1,4 @@
-name: Deploy BookWiki App
+name: Deploy BookWiki
 
 on:
   push:
@@ -6,65 +6,49 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     services:
       mysql:
-        image: mysql:5.7
-        options: --health-cmd="mysqladmin ping -h 127.0.0.1 -uuser -ppwd --silent" --health-interval=10s --health-retries=5
-        ports:
-          - 3320:3306  # Changed the host port to 3320 to avoid conflicts
+        image: mysql:latest
         env:
-          MYSQL_ROOT_PASSWORD: rootpwd
+          MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: auth-db
           MYSQL_USER: user
           MYSQL_PASSWORD: pwd
+        options: >-
+          --health-cmd "mysqladmin ping --silent"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 3
+        ports:
+          - 3306:3306
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      # Setup Docker
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v1
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Install Docker Compose
+      - name: Build and push Docker images
         run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
+          docker-compose -f docker-compose.yml build
+          docker-compose -f docker-compose.yml up -d
 
-      # Stop and remove existing MySQL container (if it exists)
-      - name: Stop and remove existing MySQL container
+      - name: Run database migrations
         run: |
-          docker ps -q --filter "name=bookwiki_mysql_1" | xargs -r docker stop
-          docker ps -a -q --filter "name=bookwiki_mysql_1" | xargs -r docker rm
+          docker exec -it books-service ./gradlew flywayMigrate
 
-      # Build and push bookwiki-frontend Docker image
-      - name: Build and push bookwiki-frontend Docker image
+      - name: Wait for MySQL to be ready
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/bookwiki-frontend:latest ./bookwiki-frontend
-          docker push ${{ secrets.DOCKER_USERNAME }}/bookwiki-frontend:latest
+          until docker exec mysql mysqladmin ping --silent; do sleep 5; done
 
-      # Build and push books-service Docker image
-      - name: Build and push books-service Docker image
-        run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/books-service:latest ./books-service
-          docker push ${{ secrets.DOCKER_USERNAME }}/books-service:latest
-
-      # Deploy with Docker Compose
-      - name: Deploy services with Docker Compose
+      - name: Deploy application
         run: |
           docker-compose up --build -d
-          sleep 30 # Wait for containers to be fully up and running
 
-      # Check that MySQL service is running
-      - name: Check MySQL Health
+      - name: Verify deployment
         run: |
-          docker-compose exec mysql mysqladmin ping -uuser -ppwd
+          curl http://localhost:8080/health
