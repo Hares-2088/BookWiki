@@ -49,6 +49,10 @@ jobs:
           docker-compose up -d mysql
           sleep 30
 
+      - name: Print data.sql for debugging
+        run: |
+          cat ./books-service/src/main/resources/data.sql
+
       - name: Wait for MySQL to be healthy
         run: |
           for i in {1..30}; do
@@ -77,7 +81,3 @@ jobs:
         run: |
           docker-compose up --build -d
           sleep 30
-
-      - name: Check MySQL Health
-        run: |
-          docker-compose exec mysql mysqladmin ping -h 127.0.0.1 -uuser -ppwd
