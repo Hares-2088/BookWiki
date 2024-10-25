@@ -46,6 +46,20 @@ jobs:
           docker ps -q --filter "name=bookwiki_mysql_1" | xargs -r docker stop
           docker ps -a -q --filter "name=bookwiki_mysql_1" | xargs -r docker rm
 
+      # Wait for MySQL to be healthy
+      - name: Wait for MySQL to be healthy
+        run: |
+          for i in {1..30}; do
+            if docker-compose exec mysql mysqladmin ping -uuser -ppwd --silent; then
+              echo "MySQL is healthy"
+              exit 0
+            fi
+            echo "Waiting for MySQL to be healthy..."
+            sleep 10
+          done
+          echo "MySQL did not become healthy in time"
+          exit 1
+
       # Build and push bookwiki-frontend Docker image
       - name: Build and push bookwiki-frontend Docker image
         run: |
@@ -63,8 +77,3 @@ jobs:
         run: |
           docker-compose up --build -d
           sleep 30 # Wait for containers to be fully up and running
-
-      # Check that MySQL service is running
-      - name: Check MySQL Health
-        run: |
-          docker-compose exec mysql mysqladmin ping -uuser -ppwd
