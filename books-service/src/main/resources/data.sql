@@ -1,4 +1,4 @@
--------------------author---------------------
+-- -----------------author---------------------
 
 insert into authors (authorid, name, description , pictureurl)
 values
@@ -318,7 +318,6 @@ insert into books (bookid, bookTitle, releaseDate, genre, ISBN, coverImageLink, 
 values
     ('THRILL010', 'The Silent House', '2020-08-20', 'Thriller', '978-1526623446', 'https://m.media-amazon.com/images/I/61mvuviBYFL._AC_UF1000,1000_QL80_.jpg', 'A tense thriller by Nell', 'A66');
 
--- Romance Books
 -- Romance Books with Author Field
 insert into books (bookid, bookTitle, releaseDate, genre, ISBN, coverImageLink, description, authorid)
 values
