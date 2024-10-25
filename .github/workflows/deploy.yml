@@ -50,11 +50,12 @@ jobs:
       - name: Wait for MySQL to be healthy
         run: |
           for i in {1..30}; do
-            if docker-compose exec mysql mysqladmin ping -uuser -ppwd --silent; then
+            if docker-compose exec mysql mysqladmin ping -h 127.0.0.1 -uuser -ppwd --silent; then
               echo "MySQL is healthy"
               exit 0
             fi
-            echo "Waiting for MySQL to be healthy..."
+            echo "Waiting for MySQL to be healthy... Attempt $i"
+            docker-compose logs mysql
             sleep 10
           done
           echo "MySQL did not become healthy in time"
@@ -77,3 +78,8 @@ jobs:
         run: |
           docker-compose up --build -d
           sleep 30 # Wait for containers to be fully up and running
+
+      # Check that MySQL service is running
+      - name: Check MySQL Health
+        run: |
+          docker-compose exec mysql mysqladmin ping -h 127.0.0.1 -uuser -ppwd
