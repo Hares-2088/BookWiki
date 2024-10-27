@@ -38,8 +38,8 @@ services:
       - MYSQL_USER=user
       - MYSQL_PASSWORD=pwd
     volumes:
-      - ./data/mysql:/var/lib/mysql
-      - ./books-service/src/main/resources:/docker-entrypoint-initdb.d
+      - ./books-service/src/main/resources:/data.sql
+      - ./books-service/src/main/resources:/init.sql
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-uuser", "-ppwd", "-h", "127.0.0.1" ]
       interval: 10s
