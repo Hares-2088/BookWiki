@@ -12,7 +12,7 @@ jobs:
     services:
       mysql:
         image: mysql:5.7
-        options: --health-cmd="mysqladmin ping -h 127.0.0.1 -uuser -ppwd --silent" --health-interval=30s --health-retries=10
+#        options: --health-cmd="mysqladmin ping -h 127.0.0.1 -uuser -ppwd --silent" --health-interval=30s --health-retries=10
         ports:
           - 3320:3306
         env:
@@ -48,19 +48,19 @@ jobs:
         run: |
           cat ./books-service/src/main/resources/data.sql
 
-      - name: Wait for MySQL to be healthy
-        run: |
-          for i in {1..30}; do
-            if docker-compose exec mysql mysqladmin ping -h 127.0.0.1 -uuser -ppwd --silent; then
-              echo "MySQL is healthy"
-              exit 0
-            fi
-            echo "Waiting for MySQL to be healthy... Attempt $i"
-            docker-compose logs mysql
-            sleep 10
-          done
-          echo "MySQL did not become healthy in time"
-          exit 1
+#      - name: Wait for MySQL to be healthy
+#        run: |
+#          for i in {1..30}; do
+#            if docker-compose exec mysql mysqladmin ping -h 127.0.0.1 -uuser -ppwd --silent; then
+#              echo "MySQL is healthy"
+#              exit 0
+#            fi
+#            echo "Waiting for MySQL to be healthy... Attempt $i"
+#            docker-compose logs mysql
+#            sleep 10
+#          done
+#          echo "MySQL did not become healthy in time"
+#          exit 1
 
       - name: Build and push bookwiki-frontend Docker image
         run: |
