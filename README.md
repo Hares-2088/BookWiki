@@ -21,33 +21,29 @@ With this project, I learnt all the basic crud operations connected to the local
 ### All the Books of an Author  
 <img width="1424" alt="Screenshot 2023-12-21 at 1 17 02 AM" src="https://github.com/Hares-2088/bookwiki-fe/assets/121312399/daebe3e3-56d6-440f-91d2-3f07477e4d67">
 
-## Getting Started with Create React App
+# BookWiki
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## How to Run
 
-## Available Scripts
+1. **Clone the Repository**:
+    ```sh
+    git clone https://github.com/Hares-2088/BookWiki.git
+    cd BookWiki
+    ```
 
-In the project directory, you can run:
+2. **Build and Run Docker Containers**:
+    ```sh
+    docker-compose up -d
+    ```
 
-### `npm start`
+3. **Access the Website**:
+    - Open your web browser and navigate to:
+      ```
+      http://localhost:3000
+      ```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+4. **Access phpMyAdmin**:
+    - Open your web browser and navigate to:
+      ```
+      http://localhost:5013
+      ```
