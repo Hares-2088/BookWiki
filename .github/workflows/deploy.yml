@@ -39,11 +39,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y docker-compose
 
-      - name: Stop and remove existing MySQL container
-        run: |
-          docker ps -q --filter "name=bookwiki_mysql_1" | xargs -r docker stop
-          docker ps -a -q --filter "name=bookwiki_mysql_1" | xargs -r docker rm
-
       - name: Start MySQL container
         run: |
           docker-compose up -d mysql

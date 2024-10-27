@@ -1,32 +1,4 @@
 services:
-  bookwiki-frontend:
-    image: bookwiki-frontend
-    container_name: bookwiki-frontend
-    build:
-      context: ./bookwiki-frontend
-      dockerfile: Dockerfile
-      args:
-        - BUILD_MODE=development
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./bookwiki-frontend/src:/app/src
-
-  books-service:
-    build: books-service
-    ports:
-      - "8080:8080"
-    hostname: books-service
-    depends_on:
-      mysql:
-        condition: service_healthy
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/auth-db
-      - SPRING_DATASOURCE_USERNAME=user
-      - SPRING_DATASOURCE_PASSWORD=pwd
-
-
   mysql:
     image: mysql:5.7
     platform: linux/amd64
@@ -56,3 +28,30 @@ services:
       - 5013:80
     environment:
       - PMA_ARBITRARY=1
+
+  bookwiki-frontend:
+    image: bookwiki-frontend
+    container_name: bookwiki-frontend
+    build:
+      context: ./bookwiki-frontend
+      dockerfile: Dockerfile
+      args:
+        - BUILD_MODE=development
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./bookwiki-frontend/src:/app/src
+
+  books-service:
+    build: books-service
+    ports:
+      - "8080:8080"
+    hostname: books-service
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/auth-db
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=pwd
